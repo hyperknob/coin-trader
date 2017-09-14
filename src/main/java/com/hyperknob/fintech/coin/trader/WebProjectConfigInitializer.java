@@ -1,4 +1,4 @@
-package com.hyperseed.fintech.coin.trader;
+package com.hyperknob.fintech.coin.trader;
 
 import ch.qos.logback.ext.spring.web.LogbackConfigListener;
 import org.apache.log4j.PropertyConfigurator;

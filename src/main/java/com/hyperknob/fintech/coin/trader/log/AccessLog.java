@@ -1,4 +1,4 @@
-package com.wepiao.admin.user.aop;
+package com.hyperknob.fintech.coin.trader.log;
 
 /**
  * 自定义接口日志开关的SPI

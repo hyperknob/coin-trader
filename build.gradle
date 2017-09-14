@@ -3,7 +3,7 @@ apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
 
 description = "coin automatic trader"
-group = 'com.hyperseed'
+group = 'com.hyperknob'
 version = '1.0.1'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -34,7 +34,7 @@ repositories {
     }
 }
 
-mainClassName = 'com.hyperseed.fintech.coin.trader.SpringBootMain'
+mainClassName = 'com.hyperknob.fintech.coin.trader.SpringBootMain'
 
 sourceSets {
     main {
@@ -71,6 +71,7 @@ dependencies {
     compile "org.jboss.resteasy:resteasy-spring:$restEasyVer"
     compile 'org.quartz-scheduler:quartz:2.2.3'
     compileOnly "org.projectlombok:lombok:1.16.16"
+    compile 'com.alibaba:fastjson:1.2.38'
     testCompile "junit:junit:4.12"
 }
 
