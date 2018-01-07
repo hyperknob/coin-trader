@@ -37,7 +37,7 @@
 		<property name="fileEncoding" value="utf8" />
 		<property name="locations">
 			<list>
-				<value>classpath*:conf/config.properties</value>
+				<value>classpath*:conf/application.properties</value>
 			</list>
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="true" />   

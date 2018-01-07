@@ -9,6 +9,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -22,7 +23,6 @@ import java.util.concurrent.ScheduledExecutorService;
  *       Should auto config all Beans except DataSourceAutoConfiguration &
  *       DataSourceTransactionManagerAutoConfiguration.
  */
-@Configuration
 @ImportResource(locations={"classpath*:conf/application*.xml"})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,DataSourceTransactionManagerAutoConfiguration.class})
 @SpringBootApplication

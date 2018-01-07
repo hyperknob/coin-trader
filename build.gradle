@@ -12,6 +12,7 @@ def confEnv = hasProperty('confEnv') ? confEnv : 'pre'
 def springbootVer = '1.5.2.RELEASE'
 def restEasyVer = '3.1.0.Final'
 def dubboxVer = '2.8.4'
+def xchangeVer = '4.3.2'
 
 buildscript {
     repositories {
@@ -54,6 +55,7 @@ dependencies {
     compile 'org.logback-extensions:logback-ext-spring:0.1.4'
     compile 'io.undertow:undertow-core:1.4.7.Final'
     compile 'io.undertow:undertow-servlet:1.4.7.Final'
+    compile 'org.apache.commons:commons-lang3:3.7'
     compile 'org.apache.tomcat.embed:tomcat-embed-core:8.5.9'
     compile "org.springframework.boot:spring-boot:$springbootVer"
     compile "org.springframework.boot:spring-boot-autoconfigure:$springbootVer"
@@ -64,6 +66,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-validation:$springbootVer"
     compile "org.springframework.boot:spring-boot-starter-logging:$springbootVer"
     compile "org.springframework.boot:spring-boot-starter-aop:$springbootVer"
+    compile "org.springframework.boot:spring-boot-starter-data-redis:$springbootVer"
     compile "com.paypal.springboot:resteasy-spring-boot-starter:2.3.2-RELEASE" //make resteasy as JAX-RS implementation for springboot
     compile "org.jboss.resteasy:resteasy-jaxrs:$restEasyVer"
     compile "org.jboss.resteasy:resteasy-undertow:$restEasyVer"
@@ -73,6 +76,8 @@ dependencies {
     compileOnly "org.projectlombok:lombok:1.16.16"
     compile 'com.alibaba:fastjson:1.2.38'
     testCompile "junit:junit:4.12"
+    compile "org.knowm.xchange:xchange-core:$xchangeVer"
+    compile "org.knowm.xchange:xchange-okcoin:$xchangeVer"
 }
 
 //task copyDeps(type: Copy) {
