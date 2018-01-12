@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: coin-trader
+  devtools:
+    restart:
+      enabled: true
+  freemarker:
+    enabled: true
+    cache: false
+    suffix: .ftl
+    charset: utf-8
+    view-names: index,market/list,market/edit
+    content-type: text/html
+    allow-request-override: true
+    check-template-location: true
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    request-context-attribute: request
+    template-loader-path: classpath:/templates/
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+        fixed:
+          enabled: true
+          paths: /js/**
+          version: v12
+    static-locations: classpath:/static/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/public/
+
+server:
+  port: 8080
+  max-http-header-size: 8192
+  compression:
+      min-response-size: 512
+      enabled: true
+      mime-types: text/html,text/css,text/javascript,application/javascript,image/gif,image/png,image/jpg
+  tomcat:
+        maxThreads: 12
+        minSpareThreads: 3
+        accesslog:
+          directory: /home/jisnong/coin-trader
+          pattern: combined
+          enabled: true
+  session:
+    cookie:
+      max-age: 1800
+
+redis:
+  pool:
+    maxTotal: 20
+    maxIdle: 5
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 30000
+    minEvictableIdleTimeMillis: 60000
+    numTestsPerEvictionRun: -1
+  server:
+    ip: 39.106.45.131
+    port: 7001

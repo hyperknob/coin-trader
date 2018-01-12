@@ -1,5 +1,21 @@
+buildscript {
+    ext {
+        onfEnv = hasProperty('confEnv') ? confEnv : 'master'
+        springbootVer = '1.5.9.RELEASE'
+        restEasyVer = '3.1.0.Final'
+        dubboxVer = '2.8.4'
+        xchangeVer = '4.3.2'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springbootVer")
+    }
+}
+
 apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 description = "coin automatic trader"
@@ -8,20 +24,6 @@ version = '1.0.1'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-def confEnv = hasProperty('confEnv') ? confEnv : 'pre'
-def springbootVer = '1.5.2.RELEASE'
-def restEasyVer = '3.1.0.Final'
-def dubboxVer = '2.8.4'
-def xchangeVer = '4.3.2'
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
-    }
-}
 
 repositories {
     // maven库
@@ -35,43 +37,33 @@ repositories {
     }
 }
 
-mainClassName = 'com.hyperknob.fintech.coin.trader.SpringBootMain'
+bootRun {
+    addResources = true
+}
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java' //资源目录
-        }
-    	resources {
-            srcDir 'src/main/resources/conf'
-        }
-        //output.resourcesDir = "target"
-    }
+jar {
+    baseName = 'coin-trader'
 }
 
 dependencies {
     compile 'log4j:log4j:1.2.17'
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'org.logback-extensions:logback-ext-spring:0.1.4'
-    compile 'io.undertow:undertow-core:1.4.7.Final'
-    compile 'io.undertow:undertow-servlet:1.4.7.Final'
+//    compile 'io.undertow:undertow-core:1.4.7.Final'
+//    compile 'io.undertow:undertow-servlet:1.4.7.Final'
     compile 'org.apache.commons:commons-lang3:3.7'
-    compile 'org.apache.tomcat.embed:tomcat-embed-core:8.5.9'
+//    compile 'org.apache.tomcat.embed:tomcat-embed-core:8.5.9'
     compile "org.springframework.boot:spring-boot:$springbootVer"
     compile "org.springframework.boot:spring-boot-autoconfigure:$springbootVer"
     compile "org.springframework.boot:spring-boot-starter:$springbootVer"
-    compile "org.springframework.boot:spring-boot-starter-web:$springbootVer"
+    compile "org.springframework.boot:spring-boot-starter-web:$springbootVer" exclude module: 'spring-boot-starter-tomcat'
     compile "org.springframework.boot:spring-boot-starter-jdbc:$springbootVer"
-    compile "org.springframework.boot:spring-boot-starter-tomcat:$springbootVer"
+    compile "org.springframework.boot:spring-boot-starter-undertow:$springbootVer"
     compile "org.springframework.boot:spring-boot-starter-validation:$springbootVer"
     compile "org.springframework.boot:spring-boot-starter-logging:$springbootVer"
     compile "org.springframework.boot:spring-boot-starter-aop:$springbootVer"
-    compile "org.springframework.boot:spring-boot-starter-data-redis:$springbootVer"
-    compile "com.paypal.springboot:resteasy-spring-boot-starter:2.3.2-RELEASE" //make resteasy as JAX-RS implementation for springboot
-    compile "org.jboss.resteasy:resteasy-jaxrs:$restEasyVer"
-    compile "org.jboss.resteasy:resteasy-undertow:$restEasyVer"
-    compile "org.jboss.resteasy:resteasy-netty:$restEasyVer"
-    compile "org.jboss.resteasy:resteasy-spring:$restEasyVer"
+    compile "org.springframework.boot:spring-boot-starter-freemarker:$springbootVer"
+    compile "redis.clients:jedis:2.9.0"
     compile 'org.quartz-scheduler:quartz:2.2.3'
     compileOnly "org.projectlombok:lombok:1.16.16"
     compile 'com.alibaba:fastjson:1.2.38'
@@ -85,37 +77,37 @@ dependencies {
 //    into 'build/libs'
 //}
 //
-task cleanConf(type: Delete) {
-    delete "$projectDir/build/resources/main/"
-}
-
-task copyConf(type: Copy) {
-    dependsOn cleanConf
-    from "$projectDir/src/main/resources/conf/$confEnv"
-    into "$projectDir/build/resources/main/conf"
-}
-
-task copyMeta(type: Copy) {
-    dependsOn copyConf
-    from "$projectDir/src/main/resources/META-INF"
-    into "$projectDir/build/resources/main/META-INF"
-}
-
-
-processResources {
-    doLast {
-        delete "$projectDir/build/resources/main/"
-        copy {
-            from "$projectDir/src/main/resources/conf/$confEnv"
-            into "$buildDir/resources/main/conf"
-        }
-        copy {
-            from "$projectDir/src/main/resources/META-INF"
-            into "$buildDir/resources/main/META-INF"
-        }
-        copy {
-            from "$projectDir/src/main/resources/test"
-            into "$buildDir/resources/main/test"
-        }
-    }
-}
+//task cleanConf(type: Delete) {
+//    delete "$projectDir/build/resources/main/"
+//}
+//
+//task copyConf(type: Copy) {
+//    dependsOn cleanConf
+//    from "$projectDir/src/main/resources/conf/$confEnv"
+//    into "$projectDir/build/resources/main/conf"
+//}
+//
+//task copyMeta(type: Copy) {
+//    dependsOn copyConf
+//    from "$projectDir/src/main/resources/META-INF"
+//    into "$projectDir/build/resources/main/META-INF"
+//}
+//
+//
+//processResources {
+//    doLast {
+//        delete "$projectDir/build/resources/main/"
+//        copy {
+//            from "$projectDir/src/main/resources/conf/$confEnv"
+//            into "$buildDir/resources/main/conf"
+//        }
+//        copy {
+//            from "$projectDir/src/main/resources/META-INF"
+//            into "$buildDir/resources/main/META-INF"
+//        }
+//        copy {
+//            from "$projectDir/src/main/resources/test"
+//            into "$buildDir/resources/main/test"
+//        }
+//    }
+//}

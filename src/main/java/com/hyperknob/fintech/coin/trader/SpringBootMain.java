@@ -23,24 +23,13 @@ import java.util.concurrent.ScheduledExecutorService;
  *       Should auto config all Beans except DataSourceAutoConfiguration &
  *       DataSourceTransactionManagerAutoConfiguration.
  */
-@ImportResource(locations={"classpath*:conf/application*.xml"})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,DataSourceTransactionManagerAutoConfiguration.class})
 @SpringBootApplication
 @EnableScheduling
-public class SpringBootMain extends SpringBootServletInitializer implements EmbeddedServletContainerCustomizer {
+public class SpringBootMain {
 
     public static void main(String[] args) {
 //        SpringBoot方式启动
         SpringApplication.run(SpringBootMain.class, args);
-    }
-
-    @Override
-    public void customize(ConfigurableEmbeddedServletContainer container) {
-        container.setPort(9090);
-    }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(SpringBootMain.class);
     }
 }

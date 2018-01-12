@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static com.hyperknob.fintech.coin.trader.bean.CustomizedCurrencyPair.HSR_USDT;
-import static org.knowm.xchange.currency.CurrencyPair.BTC_USDT;
+import static com.hyperknob.fintech.coin.trader.constant.CustomizedCurrencyPair.HSR_USDT;
 
 @Component
 public class MarketMonitor {

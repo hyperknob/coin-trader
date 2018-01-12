@@ -2,7 +2,6 @@ package com.hyperknob.fintech.coin.trader;
 
 import ch.qos.logback.ext.spring.web.LogbackConfigListener;
 import org.apache.log4j.PropertyConfigurator;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -27,7 +26,7 @@ public class WebProjectConfigInitializer implements ServletContextInitializer {
         System.out.println("Initialize logback Listener.......................................");
         servletContext.addListener(LogbackConfigListener.class);
         servletContext.setInitParameter("logbackExposeWebAppRoot", "false");
-        servletContext.setInitParameter("logbackConfigLocation", "classpath:conf/logback.xml");
+        servletContext.setInitParameter("logbackConfigLocation", "classpath:logback.xml");
         System.out.println("Initialize logback Listener completely !...........................");
     }
 }

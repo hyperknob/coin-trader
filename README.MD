@@ -1,1 +1,2 @@
 数字加密货币自动交易系统
+采用springboot+freemarker
