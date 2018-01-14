@@ -1,6 +1,6 @@
 package com.hyperknob.fintech.coin.trader.cache;
 
-import com.hyperknob.fintech.coin.trader.bean.ApiKey;
+import com.hyperknob.fintech.coin.trader.bean.vo.ApiKey;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ApiKeyPairCache {
     /** Map to store api key pair **/
-    private static Map<String, ApiKey> cache = new ConcurrentHashMap<String, ApiKey>();
+    private final static Map<String, ApiKey> cache = new ConcurrentHashMap<String, ApiKey>();
 
     public static ApiKey addKeyPair(String keyName, ApiKey keypair) {
         return cache.put(keyName, keypair);

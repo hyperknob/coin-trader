@@ -1,8 +1,10 @@
 package com.hyperknob.fintech.coin.trader.market;
 
+import com.hyperknob.fintech.coin.trader.service.OkexService;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
 import org.knowm.xchange.okcoin.OkCoinExchange;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +15,8 @@ import static com.hyperknob.fintech.coin.trader.constant.CustomizedCurrencyPair.
 @Component
 public class MarketMonitor {
 
-    private static OkexMarketDataXChange dataXChange = null;
-
-    static {
-        Exchange domesticExchange = ExchangeFactory.INSTANCE
-                .createExchange(OkCoinExchange.class.getName());
-        dataXChange = new OkexMarketDataXChange(domesticExchange);
-    }
+    @Autowired
+    private OkexService okexService;
 
 
     /**
@@ -30,7 +27,7 @@ public class MarketMonitor {
     public void checkMarketData() {
         try {
             // 1.Get market ticker , trade & depth
-            dataXChange.getTicker(HSR_USDT);
+            okexService.getTicker(HSR_USDT);
             // 2.Save to cache or db
         } catch (IOException e) {
             e.printStackTrace();

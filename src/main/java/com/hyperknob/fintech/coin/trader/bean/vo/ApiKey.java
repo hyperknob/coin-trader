@@ -1,4 +1,4 @@
-package com.hyperknob.fintech.coin.trader.bean;
+package com.hyperknob.fintech.coin.trader.bean.vo;
 
 import lombok.Data;
 

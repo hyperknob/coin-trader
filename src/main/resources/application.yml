@@ -18,6 +18,11 @@ spring:
     expose-spring-macro-helpers: true
     request-context-attribute: request
     template-loader-path: classpath:/templates/
+  datasource:
+    url: jdbc:mysql://rm-uf67iq9tlb0e8x5wjo.mysql.rds.aliyuncs.com:3306/coin?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: Aliyun@2018
+    driver-class-name: com.mysql.jdbc.Driver
   resources:
     chain:
       strategy:
