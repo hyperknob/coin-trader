@@ -27,4 +27,8 @@ public class ApiKeyPairCache {
     public static void cleanAll() {
         cache.clear();
     }
+
+    public static boolean isEmpty() {
+        return cache.isEmpty();
+    }
 }

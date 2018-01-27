@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class HomePageController {
+@RequestMapping("/ajax")
+public class AJAXController {
     @Autowired
     private OkexService okexService;
 
-    @PostMapping(value = "/addApiKey")
+    @PostMapping("/addApiKey")
     @ResponseBody
     public MessageRes addApiKey(ApiKey apiKey) {
         if (null != apiKey &&
@@ -35,14 +36,5 @@ public class HomePageController {
         } else {
             return new MessageRes(400, "输入有空值");
         }
-    }
-
-    /**
-     * 首页
-     * GET
-     */
-    @RequestMapping("/index")
-    public String viewIndex(HttpServletRequest request, Model model) {
-        return "index";
     }
 }

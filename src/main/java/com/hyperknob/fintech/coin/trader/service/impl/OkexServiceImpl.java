@@ -46,27 +46,31 @@ public class OkexServiceImpl implements OkexService, InitializingBean {
 	private ExchangeSpecification exchangeSpecification;
 
 	@Override
-	public void getTicker(CurrencyPair currencyPair) throws IOException {
+	public Ticker getTicker(CurrencyPair currencyPair) throws IOException {
 		Ticker ticker = mdService.getTicker(currencyPair);
 		log.info("{} ticker: {}", currencyPair, reflectionToString(ticker, MULTI_LINE_STYLE));
+		return ticker;
 	}
 
 	@Override
-	public void getTrades(CurrencyPair currencyPair) throws IOException {
+	public Trades getTrades(CurrencyPair currencyPair) throws IOException {
 		Trades trades = mdService.getTrades(currencyPair);
 		log.info("{} trades: {}", currencyPair, reflectionToString(trades, MULTI_LINE_STYLE));
+		return trades;
 	}
 
 	@Override
-	public void getOrderBook(CurrencyPair currencyPair) throws IOException {
+	public OrderBook getOrderBook(CurrencyPair currencyPair) throws IOException {
 		OrderBook orderBook = mdService.getOrderBook(currencyPair);
 		log.info("{} order book: {}", currencyPair, reflectionToString(orderBook, MULTI_LINE_STYLE));
+		return orderBook;
 	}
 
 	@Override
-	public void getOpenOrders() throws IOException {
+	public OpenOrders getOpenOrders() throws IOException {
 		OpenOrders openOrders = tradeService.getOpenOrders();
 		log.info("openOrders: {}", reflectionToString(openOrders, MULTI_LINE_STYLE));
+		return openOrders;
 	}
 
 	@Override
@@ -75,7 +79,10 @@ public class OkexServiceImpl implements OkexService, InitializingBean {
 		if(null != key) {
 			exchangeSpecification.setApiKey(key.getKey());
 			exchangeSpecification.setSecretKey(key.getSecret());
+			// re-Activate specification
 			exchange.applySpecification(exchangeSpecification);
+			mdService = exchange.getMarketDataService();
+			tradeService = exchange.getTradeService();
 		}
 	}
 

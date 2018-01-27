@@ -1,8 +1,11 @@
 package com.hyperknob.fintech.coin.trader.config;
 
+import ch.qos.logback.ext.spring.web.LogbackConfigListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.validation.Validator;
@@ -11,6 +14,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.*;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +24,9 @@ import java.util.List;
  * Created by JinSong on 2018/1/10.
  * WEB MVC 配置
  */
+@Order(1)
 @Configuration
-public class WebConfAdapter extends WebMvcConfigurerAdapter {
+public class WebConfAdapter extends WebMvcConfigurerAdapter implements ServletContextInitializer {
 
 //  private UserAuthenticationInterceptor securityInterceptor;
 //
@@ -32,10 +38,12 @@ public class WebConfAdapter extends WebMvcConfigurerAdapter {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    //后台登录拦截器拦截路径
-//    registry.addInterceptor(securityInterceptor)
-//            .addPathPatterns("/admin/**")
-//            .excludePathPatterns("/adminlogin/**");
+    //ApiKeyCheck拦截路径
+    registry.addInterceptor(new ExchangeApiKeyCheckInterceptor())
+            .addPathPatterns("/**")
+            .excludePathPatterns("/")
+            .excludePathPatterns("/index")
+            .excludePathPatterns("/ajax/**");
   }
 
   @Override
@@ -86,4 +94,18 @@ public class WebConfAdapter extends WebMvcConfigurerAdapter {
     return new StringHttpMessageConverter(Charset.forName("UTF-8"));
   }
 
+  /**
+   * Created by JinSong on 2017/2/24.
+   * 初始化LogBack
+   * 以纯Dubbo的方式启动时onStartup并不生效，目前已经改为AOP方式拦截接口日志
+   * 适用范围为：Web App 或 Springboot
+   */
+  @Override
+  public void onStartup(ServletContext servletContext) throws ServletException {
+    System.out.println("------ Initialize logback Listener -----");
+    servletContext.addListener(LogbackConfigListener.class);
+    servletContext.setInitParameter("logbackExposeWebAppRoot", "false");
+    servletContext.setInitParameter("logbackConfigLocation", "classpath:logback.xml");
+    System.out.println("------ Initialize logback Listener completely -----");
+  }
 }

@@ -1,30 +1,37 @@
 package com.hyperknob.fintech.coin.trader.dao;
 
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import com.hyperknob.fintech.coin.trader.bean.po.UserCurrencyPair;
+import org.apache.ibatis.annotations.*;
 
-public class CurrencyPairMapper {
-    @Select("SELECT * FROM users")
+import java.util.List;
+
+/**
+ * Currency Pair Mapper
+ */
+public interface CurrencyPairMapper {
+    @Select("SELECT * FROM user_currency_pair")
     @Results({
-            @Result(property = "userSex",  column = "user_sex", javaType = UserSexEnum.class),
-            @Result(property = "nickName", column = "nick_name")
+            @Result(property = "uid",  column = "uid"),
+            @Result(property = "exchange", column = "exchange"),
+            @Result(property = "currencyPair", column = "currency_pair"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "updateTime", column = "update_time")
     })
-    List<UserEntity> getAll();
+    List<UserCurrencyPair> getAll();
 
-    @Select("SELECT * FROM users WHERE id = #{id}")
+    @Select("SELECT * FROM user_currency_pair WHERE uid = #{uid}")
     @Results({
-            @Result(property = "userSex",  column = "user_sex", javaType = UserSexEnum.class),
-            @Result(property = "nickName", column = "nick_name")
+            @Result(property = "uid",  column = "uid"),
+            @Result(property = "exchange", column = "exchange"),
+            @Result(property = "currencyPair", column = "currency_pair"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "updateTime", column = "update_time")
     })
-    UserEntity getOne(Long id);
+    List<UserCurrencyPair> getByUid(Integer uid);
 
-    @Insert("INSERT INTO users(userName,passWord,user_sex) VALUES(#{userName}, #{passWord}, #{userSex})")
-    void insert(UserEntity user);
+    @Insert("INSERT INTO user_currency_pair(uid,currency_pair) VALUES(#{uid}, #{currencyPair})")
+    void insert(UserCurrencyPair currencyPair);
 
-    @Update("UPDATE users SET userName=#{userName},nick_name=#{nickName} WHERE id =#{id}")
-    void update(UserEntity user);
-
-    @Delete("DELETE FROM users WHERE id =#{id}")
-    void delete(Long id);
+    @Delete("DELETE FROM user_currency_pair WHERE uid =#{uid}")
+    void deleteByUid(Integer uid);
 }
