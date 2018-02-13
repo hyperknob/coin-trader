@@ -17,7 +17,7 @@
     </#if>
 
     <div>
-        <h3><a href="${basePath}/client/create">新增交易对</a></h3>
+        <h3><a href="${basePath}/createCurrencyPair">新增交易对</a></h3>
     </div>
 
     <table class="table table-bordered table-hover table-condensed">
